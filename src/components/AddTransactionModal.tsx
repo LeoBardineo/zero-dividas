@@ -56,7 +56,7 @@ export function AddTransactionModal({ isOpen, onClose }: AddTransactionModalProp
                     <Button
                         type="button"
                         variant={type === 'income' ? 'default' : 'outline'}
-                        className={type === 'income' ? 'bg-emerald-500 hover:bg-emerald-600' : 'flex-1'}
+                        className={type === 'income' ? 'bg-emerald-500 hover:bg-emerald-600 flex-1' : 'flex-1'}
                         onClick={() => setType('income')}
                     >
                         Receita

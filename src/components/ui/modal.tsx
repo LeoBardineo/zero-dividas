@@ -1,6 +1,5 @@
 import * as React from "react"
 import { X } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { Button } from "./button"
 
 interface ModalProps {
@@ -12,11 +11,22 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) {
+    React.useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'unset'
+        }
+        return () => {
+            document.body.style.overflow = 'unset'
+        }
+    }, [isOpen])
+
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <div className="w-full max-w-md rounded-lg bg-white shadow-lg animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200 overflow-y-auto">
+            <div className="w-full max-w-md rounded-lg bg-white shadow-lg animate-in zoom-in-95 duration-200 my-auto">
                 <div className="flex items-center justify-between border-b p-4">
                     <h3 className="text-lg font-semibold">{title}</h3>
                     <Button variant="ghost" size="icon" onClick={onClose}>

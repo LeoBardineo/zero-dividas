@@ -49,11 +49,11 @@ export default function Home() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                    <img
-                        src={user.avatar}
-                        alt={user.name}
-                        className="h-10 w-10 rounded-full border border-slate-200"
-                    />
+                    <div className="h-10 w-10 rounded-full bg-slate-200 flex items-center justify-center border border-slate-300">
+                        <span className="text-lg font-bold text-slate-600">
+                            {user.name.charAt(0).toUpperCase()}
+                        </span>
+                    </div>
                     <div>
                         <p className="text-sm text-slate-500">{getGreeting()},</p>
                         <h2 className="font-semibold text-slate-900">{user.name.split(' ')[0]}</h2>
