@@ -6,15 +6,33 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Wallet } from 'lucide-react'
 
 export default function Login() {
-    const login = useStore((state) => state.login)
+    const { login, signup } = useStore()
     const [loading, setLoading] = useState(false)
+    const [isLogin, setIsLogin] = useState(true)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        // Simulate API call
+
         setTimeout(() => {
-            login()
+            if (isLogin) {
+                const success = login(email || "demo@zerodividas.com", password || "password")
+                if (!success) {
+                    alert("Usuário ou senha inválidos!")
+                }
+            } else {
+                const success = signup(name, email, password)
+                if (success) {
+                    alert("Conta criada com sucesso! Faça login.")
+                    setIsLogin(true)
+                    setPassword('') // Clear password for security
+                } else {
+                    alert("Erro ao criar conta. Email já existe?")
+                }
+            }
             setLoading(false)
         }, 1000)
     }
@@ -30,17 +48,29 @@ export default function Login() {
                     </div>
                     <CardTitle className="text-2xl">Zero Dívidas</CardTitle>
                     <CardDescription>
-                        Entre para gerenciar suas finanças
+                        {isLogin ? 'Entre para gerenciar suas finanças' : 'Crie sua conta gratuitamente'}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleLogin} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        {!isLogin && (
+                            <div className="space-y-2">
+                                <Input
+                                    type="text"
+                                    placeholder="Seu nome"
+                                    required
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
+                        )}
                         <div className="space-y-2">
                             <Input
                                 type="email"
                                 placeholder="seu@email.com"
                                 required
-                                defaultValue="demo@zerodividas.com"
+                                defaultValue={isLogin ? "demo@zerodividas.com" : email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div className="space-y-2">
@@ -48,17 +78,22 @@ export default function Login() {
                                 type="password"
                                 placeholder="Sua senha"
                                 required
-                                defaultValue="password"
+                                defaultValue={isLogin ? "password" : password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <Button className="w-full" type="submit" disabled={loading}>
-                            {loading ? 'Entrando...' : 'Entrar'}
+                            {loading ? (isLogin ? 'Entrando...' : 'Criando conta...') : (isLogin ? 'Entrar' : 'Criar Conta')}
                         </Button>
                         <div className="text-center text-sm text-slate-500">
-                            Não tem uma conta?{' '}
-                            <a href="#" className="font-semibold text-slate-900 hover:underline">
-                                Criar conta
-                            </a>
+                            {isLogin ? 'Não tem uma conta? ' : 'Já tem uma conta? '}
+                            <button
+                                type="button"
+                                onClick={() => setIsLogin(!isLogin)}
+                                className="font-semibold text-slate-900 hover:underline"
+                            >
+                                {isLogin ? 'Criar conta' : 'Entrar'}
+                            </button>
                         </div>
                     </form>
                 </CardContent>
