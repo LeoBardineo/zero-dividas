@@ -4,6 +4,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/zero-dividas/', // IMPORTANT: Replace with your repository name if different
   plugins: [react()],
   resolve: {
     alias: {

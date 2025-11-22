@@ -3,8 +3,8 @@ import { formatCurrency, formatDate } from '@/lib/utils'
 import { AccountCard } from '@/components/AccountCard'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Plus, Minus, CreditCard, Settings, LogOut, Bell } from 'lucide-react'
-import { startOfMonth, endOfMonth, isAfter, isBefore } from 'date-fns'
+import { Plus, Minus, CreditCard, LogOut } from 'lucide-react'
+import { startOfMonth, endOfMonth, isAfter } from 'date-fns'
 
 export default function Home() {
     const { user, accounts, transactions, logout } = useStore()
