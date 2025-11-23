@@ -7,7 +7,15 @@ import { Plus, Minus, LogOut } from 'lucide-react'
 import { startOfMonth, endOfMonth, isAfter } from 'date-fns'
 
 export default function Home() {
-    const { user, accounts, transactions, logout, setActiveTab, openTransactionModal } = useStore()
+    const {
+        user,
+        accounts,
+        transactions,
+        logout,
+        setActiveTab,
+        openTransactionModal,
+        setAccountsSortOrder
+    } = useStore()
 
     if (!user) return null
 
@@ -160,7 +168,15 @@ export default function Home() {
             <div>
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="font-semibold text-slate-900">Próximas Contas</h3>
-                    <Button variant="ghost" size="sm" className="text-xs h-8">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-xs h-8"
+                        onClick={() => {
+                            setAccountsSortOrder('default')
+                            setActiveTab('accounts')
+                        }}
+                    >
                         Ver todas
                     </Button>
                 </div>

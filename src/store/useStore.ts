@@ -20,9 +20,14 @@ interface AppState {
     openTransactionModal: (type?: 'income' | 'expense') => void;
     closeTransactionModal: () => void;
 
+    // Accounts Sort State
+    accountsSortOrder: 'default' | 'date-asc' | 'date-desc' | 'amount-asc' | 'amount-desc';
+    setAccountsSortOrder: (order: 'default' | 'date-asc' | 'date-desc' | 'amount-asc' | 'amount-desc') => void;
+
     login: (email: string, password: string) => boolean;
     signup: (name: string, email: string, password: string) => boolean;
     logout: () => void;
+
     addTransaction: (transaction: Transaction) => void;
     updateTransaction: (id: string, updates: Partial<Transaction>) => void;
     deleteTransaction: (id: string) => void;
@@ -54,6 +59,9 @@ export const useStore = create<AppState>()(
             }),
 
             closeTransactionModal: () => set({ isTransactionModalOpen: false }),
+
+            accountsSortOrder: 'default',
+            setAccountsSortOrder: (order) => set({ accountsSortOrder: order }),
 
             login: (email, password) => {
                 const { registeredUsers } = get();

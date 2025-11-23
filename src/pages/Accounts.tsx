@@ -19,13 +19,15 @@ export default function Accounts() {
         isTransactionModalOpen,
         transactionModalType,
         openTransactionModal,
-        closeTransactionModal
+        closeTransactionModal,
+        accountsSortOrder,
+        setAccountsSortOrder
     } = useStore()
     // const [isAddModalOpen, setIsAddModalOpen] = useState(false) // Removed local state
     const [isSearching, setIsSearching] = useState(false)
     const [view, setView] = useState<'list' | 'calendar'>('list')
     const [date, setDate] = useState(new Date())
-    const [sortOrder, setSortOrder] = useState<'default' | 'date-asc' | 'date-desc' | 'amount-asc' | 'amount-desc'>('default')
+    // const [sortOrder, setSortOrder] = useState<'default' | 'date-asc' | 'date-desc' | 'amount-asc' | 'amount-desc'>('default') // Removed local state
     const [selectedCategory, setSelectedCategory] = useState('all')
     const [selectedAccount, setSelectedAccount] = useState('all')
 
@@ -45,13 +47,13 @@ export default function Accounts() {
             }
 
             // Then apply the selected sort order
-            if (sortOrder === 'default') {
+            if (accountsSortOrder === 'default') {
                 return new Date(a.date).getTime() - new Date(b.date).getTime()
             }
-            if (sortOrder === 'date-asc') return new Date(a.date).getTime() - new Date(b.date).getTime()
-            if (sortOrder === 'date-desc') return new Date(b.date).getTime() - new Date(a.date).getTime()
-            if (sortOrder === 'amount-asc') return a.amount - b.amount
-            if (sortOrder === 'amount-desc') return b.amount - a.amount
+            if (accountsSortOrder === 'date-asc') return new Date(a.date).getTime() - new Date(b.date).getTime()
+            if (accountsSortOrder === 'date-desc') return new Date(b.date).getTime() - new Date(a.date).getTime()
+            if (accountsSortOrder === 'amount-asc') return a.amount - b.amount
+            if (accountsSortOrder === 'amount-desc') return b.amount - a.amount
             return 0
         })
     }
@@ -146,8 +148,8 @@ export default function Accounts() {
             <div className="flex justify-end">
                 <select
                     className="text-sm border rounded-md px-2 py-1 bg-white w-full md:w-auto"
-                    value={sortOrder}
-                    onChange={(e) => setSortOrder(e.target.value as any)}
+                    value={accountsSortOrder}
+                    onChange={(e) => setAccountsSortOrder(e.target.value as any)}
                 >
                     <option value="default">Padrão (A vencer)</option>
                     <option value="date-asc">Data (Antigas)</option>
