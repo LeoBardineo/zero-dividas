@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { fakerPT_BR as faker } from '@faker-js/faker';
 import { addMonths, subMonths, startOfMonth, endOfMonth, isBefore } from 'date-fns';
 
 export interface User {
