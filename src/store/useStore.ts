@@ -10,6 +10,16 @@ interface AppState {
     isAuthenticated: boolean;
     registeredUsers: any[]; // In a real app, don't store passwords in plain text!
 
+    // Navigation & UI State
+    activeTab: 'home' | 'accounts' | 'statistics';
+    setActiveTab: (tab: 'home' | 'accounts' | 'statistics') => void;
+
+    // Global Modal State
+    isTransactionModalOpen: boolean;
+    transactionModalType: 'income' | 'expense';
+    openTransactionModal: (type?: 'income' | 'expense') => void;
+    closeTransactionModal: () => void;
+
     login: (email: string, password: string) => boolean;
     signup: (name: string, email: string, password: string) => boolean;
     logout: () => void;
@@ -30,6 +40,20 @@ export const useStore = create<AppState>()(
             categories: [],
             isAuthenticated: false,
             registeredUsers: [],
+
+            // Initial UI State
+            activeTab: 'home',
+            isTransactionModalOpen: false,
+            transactionModalType: 'expense',
+
+            setActiveTab: (tab) => set({ activeTab: tab }),
+
+            openTransactionModal: (type = 'expense') => set({
+                isTransactionModalOpen: true,
+                transactionModalType: type
+            }),
+
+            closeTransactionModal: () => set({ isTransactionModalOpen: false }),
 
             login: (email, password) => {
                 const { registeredUsers } = get();

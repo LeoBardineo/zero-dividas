@@ -3,11 +3,11 @@ import { formatCurrency, formatDate } from '@/lib/utils'
 import { AccountCard } from '@/components/AccountCard'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Plus, Minus, CreditCard, LogOut } from 'lucide-react'
+import { Plus, Minus, LogOut } from 'lucide-react'
 import { startOfMonth, endOfMonth, isAfter } from 'date-fns'
 
 export default function Home() {
-    const { user, accounts, transactions, logout } = useStore()
+    const { user, accounts, transactions, logout, setActiveTab, openTransactionModal } = useStore()
 
     if (!user) return null
 
@@ -82,24 +82,32 @@ export default function Home() {
             </Card>
 
             {/* Quick Actions */}
-            <div className="flex justify-around">
+            <div className="flex justify-center gap-8">
                 <div className="flex flex-col items-center space-y-2">
-                    <Button size="icon" className="h-12 w-12 rounded-full bg-emerald-500 hover:bg-emerald-600 shadow-md">
-                        <Plus className="h-6 w-6 text-white" />
+                    <Button
+                        size="icon"
+                        className="h-14 w-14 rounded-full bg-emerald-500 hover:bg-emerald-600 shadow-md"
+                        onClick={() => {
+                            setActiveTab('accounts')
+                            openTransactionModal('income')
+                        }}
+                    >
+                        <Plus className="h-7 w-7 text-white" />
                     </Button>
                     <span className="text-xs font-medium text-slate-600">Receita</span>
                 </div>
                 <div className="flex flex-col items-center space-y-2">
-                    <Button size="icon" className="h-12 w-12 rounded-full bg-red-500 hover:bg-red-600 shadow-md">
-                        <Minus className="h-6 w-6 text-white" />
+                    <Button
+                        size="icon"
+                        className="h-14 w-14 rounded-full bg-red-500 hover:bg-red-600 shadow-md"
+                        onClick={() => {
+                            setActiveTab('accounts')
+                            openTransactionModal('expense')
+                        }}
+                    >
+                        <Minus className="h-7 w-7 text-white" />
                     </Button>
                     <span className="text-xs font-medium text-slate-600">Gasto</span>
-                </div>
-                <div className="flex flex-col items-center space-y-2">
-                    <Button size="icon" className="h-12 w-12 rounded-full bg-blue-500 hover:bg-blue-600 shadow-md">
-                        <CreditCard className="h-6 w-6 text-white" />
-                    </Button>
-                    <span className="text-xs font-medium text-slate-600">Pagar</span>
                 </div>
             </div>
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useStore } from '@/store/useStore'
 import { Modal } from '@/components/ui/modal'
 import { Button } from '@/components/ui/button'
@@ -8,16 +8,24 @@ import { faker } from '@faker-js/faker'
 interface AddTransactionModalProps {
     isOpen: boolean
     onClose: () => void
+    defaultType?: 'income' | 'expense'
 }
 
-export function AddTransactionModal({ isOpen, onClose }: AddTransactionModalProps) {
+export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }: AddTransactionModalProps) {
     const { addTransaction, categories, accounts } = useStore()
     const [description, setDescription] = useState('')
     const [amount, setAmount] = useState('')
     const [date, setDate] = useState(new Date().toISOString().split('T')[0])
     const [categoryId, setCategoryId] = useState(categories[0]?.id || '')
     const [accountId, setAccountId] = useState(accounts[0]?.id || '')
-    const [type, setType] = useState<'income' | 'expense'>('expense')
+    const [type, setType] = useState<'income' | 'expense'>(defaultType)
+    const [isRecurring, setIsRecurring] = useState(false)
+
+    useEffect(() => {
+        if (isOpen) {
+            setType(defaultType)
+        }
+    }, [isOpen, defaultType])
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -31,7 +39,8 @@ export function AddTransactionModal({ isOpen, onClose }: AddTransactionModalProp
             accountId,
             type,
             status: 'pending',
-            isRecurring: false,
+            isRecurring: isRecurring,
+            recurrence: isRecurring ? 'monthly' : undefined,
         })
 
         onClose()
@@ -39,6 +48,7 @@ export function AddTransactionModal({ isOpen, onClose }: AddTransactionModalProp
         setDescription('')
         setAmount('')
         setDate(new Date().toISOString().split('T')[0])
+        setIsRecurring(false)
     }
 
     return (
@@ -61,6 +71,34 @@ export function AddTransactionModal({ isOpen, onClose }: AddTransactionModalProp
                     >
                         Receita
                     </Button>
+                </div>
+
+                <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                    <div className="flex-1">
+                        <label className="text-sm font-medium block mb-1">Frequência</label>
+                        <div className="flex space-x-4">
+                            <label className="flex items-center space-x-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="recurrence"
+                                    checked={isRecurring}
+                                    onChange={() => setIsRecurring(true)}
+                                    className="text-emerald-500 focus:ring-emerald-500"
+                                />
+                                <span className="text-sm text-slate-700">Recorrente</span>
+                            </label>
+                            <label className="flex items-center space-x-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="recurrence"
+                                    checked={!isRecurring}
+                                    onChange={() => setIsRecurring(false)}
+                                    className="text-emerald-500 focus:ring-emerald-500"
+                                />
+                                <span className="text-sm text-slate-700">Extraordinária</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="space-y-2">

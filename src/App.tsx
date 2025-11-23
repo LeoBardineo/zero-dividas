@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useStore } from '@/store/useStore'
 import Login from '@/pages/Login'
 import Home from '@/pages/Home'
@@ -7,15 +7,14 @@ import Statistics from '@/pages/Statistics'
 import { BottomNav } from '@/components/BottomNav'
 
 function App() {
-    const { isAuthenticated } = useStore()
-    const [activeTab, setActiveTab] = useState<'home' | 'accounts' | 'statistics'>('home')
+    const { isAuthenticated, activeTab, setActiveTab } = useStore()
 
     // Reset tab on logout
     useEffect(() => {
         if (!isAuthenticated) {
             setActiveTab('home')
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated, setActiveTab])
 
     if (!isAuthenticated) {
         return <Login />
