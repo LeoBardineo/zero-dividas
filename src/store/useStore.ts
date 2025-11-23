@@ -20,6 +20,10 @@ interface AppState {
     openTransactionModal: (type?: 'income' | 'expense') => void;
     closeTransactionModal: () => void;
 
+    isAddAccountModalOpen: boolean;
+    openAddAccountModal: () => void;
+    closeAddAccountModal: () => void;
+
     // Accounts Sort State
     accountsSortOrder: 'default' | 'date-asc' | 'date-desc' | 'amount-asc' | 'amount-desc';
     setAccountsSortOrder: (order: 'default' | 'date-asc' | 'date-desc' | 'amount-asc' | 'amount-desc') => void;
@@ -59,6 +63,10 @@ export const useStore = create<AppState>()(
             }),
 
             closeTransactionModal: () => set({ isTransactionModalOpen: false }),
+
+            isAddAccountModalOpen: false,
+            openAddAccountModal: () => set({ isAddAccountModalOpen: true }),
+            closeAddAccountModal: () => set({ isAddAccountModalOpen: false }),
 
             accountsSortOrder: 'default',
             setAccountsSortOrder: (order) => set({ accountsSortOrder: order }),

@@ -1,6 +1,7 @@
 import { useStore } from '@/store/useStore'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { AccountCard } from '@/components/AccountCard'
+import { AddAccountModal } from '@/components/AddAccountModal'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Plus, Minus, LogOut } from 'lucide-react'
@@ -14,7 +15,10 @@ export default function Home() {
         logout,
         setActiveTab,
         openTransactionModal,
-        setAccountsSortOrder
+        setAccountsSortOrder,
+        isAddAccountModalOpen,
+        openAddAccountModal,
+        closeAddAccountModal
     } = useStore()
 
     if (!user) return null
@@ -153,7 +157,7 @@ export default function Home() {
             <div>
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="font-semibold text-slate-900">Minhas Contas</h3>
-                    <Button variant="ghost" size="sm" className="text-xs h-8">
+                    <Button variant="ghost" size="sm" className="text-xs h-8" onClick={openAddAccountModal}>
                         Adicionar
                     </Button>
                 </div>
@@ -203,6 +207,11 @@ export default function Home() {
                     )}
                 </div>
             </div>
+
+            <AddAccountModal
+                isOpen={isAddAccountModalOpen}
+                onClose={closeAddAccountModal}
+            />
         </div>
     )
 }
