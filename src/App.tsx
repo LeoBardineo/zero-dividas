@@ -21,8 +21,8 @@ function App() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
-            <main className="container max-w-md mx-auto min-h-screen bg-white shadow-xl relative px-4 pt-6">
+        <div className="min-h-screen bg-[#0D57636C] text-slate-900 font-sans">
+            <main className="container max-w-xl mx-auto min-h-screen bg-white shadow-xl relative px-4 pt-6">
                 {activeTab === 'home' && <Home />}
                 {activeTab === 'accounts' && <Accounts />}
                 {activeTab === 'statistics' && <Statistics />}

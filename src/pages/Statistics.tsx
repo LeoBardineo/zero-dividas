@@ -62,7 +62,7 @@ export default function Statistics() {
 
     return (
         <div className="space-y-6 pb-24">
-            <h2 className="text-2xl font-bold">Análises</h2>
+            <h2 className="text-2xl font-bold text-[#39D2C0]">Análises</h2>
 
             {/* Scoreboard */}
             <div className="grid grid-cols-2 gap-4">
@@ -139,41 +139,6 @@ export default function Statistics() {
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
-                </CardContent>
-            </Card>
-
-            {/* Payoff Simulator */}
-            <Card>
-                <CardHeader>
-                    <CardTitle className="text-base">Simulador de Quitação</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Valor da Dívida</label>
-                        <Input
-                            type="number"
-                            value={debtAmount}
-                            onChange={(e) => setDebtAmount(e.target.value)}
-                            placeholder="Ex: 5000"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Pagamento Mensal Possível</label>
-                        <Input
-                            type="number"
-                            value={monthlyPayment}
-                            onChange={(e) => setMonthlyPayment(e.target.value)}
-                            placeholder="Ex: 500"
-                        />
-                    </div>
-                    <Button onClick={calculatePayoff} className="w-full">Calcular</Button>
-
-                    {monthsToPay !== null && (
-                        <div className="mt-4 p-4 bg-slate-100 rounded-lg text-center">
-                            <p className="text-sm text-slate-600">Você quitará essa dívida em:</p>
-                            <p className="text-2xl font-bold text-slate-900">{monthsToPay} meses</p>
-                        </div>
-                    )}
                 </CardContent>
             </Card>
         </div>

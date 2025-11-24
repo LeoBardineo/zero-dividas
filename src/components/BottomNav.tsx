@@ -14,7 +14,7 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
                     onClick={() => onTabChange('home')}
                     className={cn(
                         "flex flex-col items-center justify-center space-y-1 p-2 transition-colors",
-                        activeTab === 'home' ? "text-slate-900" : "text-slate-400 hover:text-slate-600"
+                        activeTab === 'home' ? "text-[#39D2C0]" : "text-slate-400 hover:text-[#0D57636C]"
                     )}
                 >
                     <Home className="h-6 w-6" />
@@ -24,7 +24,7 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
                     onClick={() => onTabChange('accounts')}
                     className={cn(
                         "flex flex-col items-center justify-center space-y-1 p-2 transition-colors",
-                        activeTab === 'accounts' ? "text-slate-900" : "text-slate-400 hover:text-slate-600"
+                        activeTab === 'accounts' ? "text-[#39D2C0]" : "text-slate-400 hover:text-[#0D57636C]"
                     )}
                 >
                     <Wallet className="h-6 w-6" />
@@ -34,7 +34,7 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
                     onClick={() => onTabChange('statistics')}
                     className={cn(
                         "flex flex-col items-center justify-center space-y-1 p-2 transition-colors",
-                        activeTab === 'statistics' ? "text-slate-900" : "text-slate-400 hover:text-slate-600"
+                        activeTab === 'statistics' ? "text-[#39D2C0]" : "text-slate-400 hover:text-[#0D57636C]"
                     )}
                 >
                     <PieChart className="h-6 w-6" />

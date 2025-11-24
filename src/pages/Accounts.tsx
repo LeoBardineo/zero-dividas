@@ -129,7 +129,7 @@ export default function Accounts() {
     return (
         <div className="space-y-4 pb-24">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Minhas Contas</h2>
+                <h2 className="text-2xl font-bold text-[#39D2C0]">Minhas Contas</h2>
                 <Button variant="outline" size="icon" onClick={() => setView(view === 'list' ? 'calendar' : 'list')}>
                     {view === 'list' ? <CalendarIcon className="h-4 w-4" /> : <List className="h-4 w-4" />}
                 </Button>
@@ -141,7 +141,7 @@ export default function Accounts() {
                 onClick={handleSearchBoletos}
                 disabled={isSearching}
             >
-                <span>{isSearching ? "Buscando..." : "Buscar Boletos (DDA)"}</span>
+                <span>{isSearching ? "Buscando..." : "Buscar Boletos"}</span>
                 <Search className="h-4 w-4" />
             </Button>
 
@@ -305,7 +305,7 @@ export default function Accounts() {
             )}
 
             <Button
-                className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg bg-slate-900 hover:bg-slate-800"
+                className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg bg-[#39D2C0] hover:bg-[#0D57636C]"
                 onClick={() => openTransactionModal()}
             >
                 <Plus className="h-6 w-6" />

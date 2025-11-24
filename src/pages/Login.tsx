@@ -38,15 +38,15 @@ export default function Login() {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+        <div className="flex min-h-screen items-center justify-center bg-[#0D57636C] p-4">
             <Card className="w-full max-w-md">
                 <CardHeader className="space-y-1 text-center">
                     <div className="flex justify-center mb-4">
-                        <div className="rounded-full bg-slate-900 p-3">
+                        <div className="rounded-full bg-[#0D57636C] p-3">
                             <Wallet className="h-6 w-6 text-white" />
                         </div>
                     </div>
-                    <CardTitle className="text-2xl">Zero Dívidas</CardTitle>
+                    <CardTitle className="text-3xl text-[#39D2C0]">Zero Dívidas</CardTitle>
                     <CardDescription>
                         {isLogin ? 'Entre para gerenciar suas finanças' : 'Crie sua conta gratuitamente'}
                     </CardDescription>
@@ -90,7 +90,7 @@ export default function Login() {
                             <button
                                 type="button"
                                 onClick={() => setIsLogin(!isLogin)}
-                                className="font-semibold text-slate-900 hover:underline"
+                                className="font-semibold text-[#39D2C0] hover:underline"
                             >
                                 {isLogin ? 'Criar conta' : 'Entrar'}
                             </button>
