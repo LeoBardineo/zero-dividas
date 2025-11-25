@@ -96,13 +96,13 @@ export default function Accounts() {
                     style={{ backgroundColor: getCategoryColor(transaction.categoryId) }}
                 />
                 <div className="flex-1">
-                    <p className="font-medium text-slate-900">{transaction.description}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="font-medium text-slate-900 dark:text-slate-50">{transaction.description}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-100">
                         {getCategoryName(transaction.categoryId)} • {formatDate(transaction.date)}
                     </p>
                 </div>
                 <div className="text-right">
-                    <p className={`font-bold ${transaction.type === 'income' ? 'text-emerald-600' : 'text-slate-900'}`}>
+                    <p className={`font-bold ${transaction.type === 'income' ? 'text-emerald-600 dark:text-emerald-500' : 'text-slate-900 dark:text-white'}`}>
                         {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
                     </p>
                     {transaction.type === 'expense' && (
@@ -147,7 +147,7 @@ export default function Accounts() {
 
             <div className="flex justify-end">
                 <select
-                    className="text-sm border rounded-md px-2 py-1 bg-white w-full md:w-auto"
+                    className="text-sm border rounded-md px-2 py-1 bg-white dark:text-slate-900 w-full md:w-auto"
                     value={accountsSortOrder}
                     onChange={(e) => setAccountsSortOrder(e.target.value as any)}
                 >
@@ -172,7 +172,7 @@ export default function Accounts() {
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-6 w-6 ml-2 text-slate-400 hover:text-slate-600"
+                                className="h-6 w-6 ml-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-100"
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     setIsFilterModalOpen(true)
@@ -191,7 +191,7 @@ export default function Accounts() {
                                         {visibleExpensesCount < allExpenses.length && (
                                             <Button
                                                 variant="outline"
-                                                className="w-full text-sm text-slate-600 hover:text-slate-900 border-slate-200"
+                                                className="w-full text-sm text-slate-600 dark:text-slate-100 hover:text-slate-900 border-slate-200"
                                                 onClick={() => setVisibleExpensesCount(prev => prev + 5)}
                                             >
                                                 Carregar mais

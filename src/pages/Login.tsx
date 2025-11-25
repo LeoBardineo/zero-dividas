@@ -38,7 +38,7 @@ export default function Login() {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-[#0D57636C] p-4">
+        <div className="flex min-h-screen items-center justify-center bg-[#0D57636C] dark:bg-[#0B494F] p-4">
             <Card className="w-full max-w-md">
                 <CardHeader className="space-y-1 text-center">
                     <div className="flex justify-center mb-4">

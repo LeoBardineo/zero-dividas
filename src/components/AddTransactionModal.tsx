@@ -73,9 +73,9 @@ export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }
                     </Button>
                 </div>
 
-                <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                <div className="flex items-center space-x-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-900">
                     <div className="flex-1">
-                        <label className="text-sm font-medium block mb-1">Frequência</label>
+                        <label className="text-sm font-medium block mb- dark:text1">Frequência</label>
                         <div className="flex space-x-4">
                             <label className="flex items-center space-x-2 cursor-pointer">
                                 <input
@@ -85,7 +85,7 @@ export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }
                                     onChange={() => setIsRecurring(true)}
                                     className="text-emerald-500 focus:ring-emerald-500"
                                 />
-                                <span className="text-sm text-slate-700">Recorrente</span>
+                                <span className="text-sm text-slate-700 dark:text-slate-300">Recorrente</span>
                             </label>
                             <label className="flex items-center space-x-2 cursor-pointer">
                                 <input
@@ -95,7 +95,7 @@ export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }
                                     onChange={() => setIsRecurring(false)}
                                     className="text-emerald-500 focus:ring-emerald-500"
                                 />
-                                <span className="text-sm text-slate-700">Extraordinária</span>
+                                <span className="text-sm text-slate-700 dark:text-slate-300">Extraordinária</span>
                             </label>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Categoria</label>
                     <select
-                        className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"
+                        className="flex h-10 w-full rounded-md border border-slate-200 bg-white dark:bg-slate-200 dark:text-slate-600 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"
                         value={categoryId}
                         onChange={(e) => setCategoryId(e.target.value)}
                     >
@@ -151,7 +151,7 @@ export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Conta</label>
                     <select
-                        className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"
+                        className="flex h-10 w-full rounded-md border border-slate-200 bg-white dark:bg-slate-200 dark:text-slate-600 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"
                         value={accountId}
                         onChange={(e) => setAccountId(e.target.value)}
                     >
