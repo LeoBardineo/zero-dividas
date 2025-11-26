@@ -43,7 +43,11 @@ export default function Home() {
         .filter(t => t.type === 'expense' && t.status === 'pending' && t.date <= currentMonthEnd.toISOString())
         .reduce((acc, t) => acc + t.amount, 0)
 
-    const remainingToSpend = totalBalance - pendingBills
+    const pendingIncome = transactions
+        .filter(t => t.type === 'income' && t.status === 'pending' && t.date <= currentMonthEnd.toISOString())
+        .reduce((acc, t) => acc + t.amount, 0)
+
+    const remainingToSpend = totalBalance + pendingIncome - pendingBills
 
     const upcomingBills = transactions
         .filter(t => t.type === 'expense' && t.status === 'pending' && isAfter(new Date(t.date), today))
@@ -90,7 +94,7 @@ export default function Home() {
                         {formatCurrency(remainingToSpend)}
                     </div>
                     <p className="text-xs text-slate-500 mt-1 dark:text-slate-50">
-                        Saldo atual ({formatCurrency(totalBalance)}) - Contas a pagar ({formatCurrency(pendingBills)})
+                        Saldo atual ({formatCurrency(pendingIncome)}) - Contas a pagar ({formatCurrency(pendingBills)})
                     </p>
                 </CardContent>
             </Card>
