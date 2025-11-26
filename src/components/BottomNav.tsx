@@ -8,7 +8,7 @@ interface BottomNavProps {
 
 export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
     return (
-        <div className="fixed bottom-0 left-0 right-0 border-t bg-white pb-safe pt-2 shadow-lg">
+        <div className="fixed bottom-0 left-0 right-0 border-t bg-white dark:bg-slate-800 pb-safe pt-2 shadow-lg">
             <div className="flex justify-around pb-2">
                 <button
                     onClick={() => onTabChange('home')}

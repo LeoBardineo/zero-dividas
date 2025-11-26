@@ -50,7 +50,6 @@ export default function Statistics() {
     ]
 
 
-
     return (
         <div className="space-y-6 pb-24">
             <h2 className="text-2xl font-bold text-[#39D2C0]">Análises</h2>
@@ -59,18 +58,18 @@ export default function Statistics() {
             <div className="grid grid-cols-2 gap-4">
                 <Card>
                     <CardHeader className="p-4 pb-2">
-                        <CardTitle className="text-xs font-medium text-slate-500">Estimado (Mês)</CardTitle>
+                        <CardTitle className="text-xs font-medium text-slate-500 dark:text-slate-50">Estimado (Mês)</CardTitle>
                     </CardHeader>
                     <CardContent className="p-4 pt-0">
-                        <div className="text-lg font-bold">{formatCurrency(totalEstimated)}</div>
+                        <div className="text-lg font-bold dark:text-white">{formatCurrency(totalEstimated)}</div>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="p-4 pb-2">
-                        <CardTitle className="text-xs font-medium text-slate-500">Já Pago</CardTitle>
+                        <CardTitle className="text-xs font-medium text-slate-500 dark:text-slate-50">Já Pago</CardTitle>
                     </CardHeader>
                     <CardContent className="p-4 pt-0">
-                        <div className="text-lg font-bold text-emerald-600">{formatCurrency(totalPaid)}</div>
+                        <div className="text-lg font-bold text-emerald-600 dark:text-emerald-500">{formatCurrency(totalPaid)}</div>
                     </CardContent>
                 </Card>
             </div>
@@ -78,7 +77,7 @@ export default function Statistics() {
             {/* Donut Chart */}
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-base">Gastos por Categoria</CardTitle>
+                    <CardTitle className="text-base dark:text-slate-100">Gastos por Categoria</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="h-[200px] w-full">
@@ -105,7 +104,7 @@ export default function Statistics() {
                         {expensesByCategory.map((item, index) => (
                             <div key={index} className="flex items-center text-xs">
                                 <div className="h-2 w-2 rounded-full mr-2" style={{ backgroundColor: item.color }} />
-                                <span className="truncate">{item.name}</span>
+                                <span className="truncate dark:text-slate-50">{item.name}</span>
                             </div>
                         ))}
                     </div>
@@ -115,7 +114,7 @@ export default function Statistics() {
             {/* Bar Chart */}
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-base">Comparativo Mensal</CardTitle>
+                    <CardTitle className="text-base dark:text-slate-100">Comparativo Mensal</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="h-[200px] w-full">

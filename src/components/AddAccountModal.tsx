@@ -72,7 +72,7 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
                     <label htmlFor="type" className="text-sm font-medium">Tipo de Conta</label>
                     <select
                         id="type"
-                        className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"
+                        className="flex h-10 w-full rounded-md border border-slate-200 bg-white dark:bg-slate-200 dark:text-slate-600 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"
                         value={type}
                         onChange={(e) => setType(e.target.value as Account['type'])}
                     >

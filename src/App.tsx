@@ -5,8 +5,9 @@ import Home from '@/pages/Home'
 import Accounts from '@/pages/Accounts'
 import Statistics from '@/pages/Statistics'
 import { BottomNav } from '@/components/BottomNav'
+import { ThemeToggle } from './components/ThemeToggle'
 
-function App() {
+function App(): JSX.Element {
     const { isAuthenticated, activeTab, setActiveTab } = useStore()
 
     // Reset tab on logout
@@ -21,8 +22,8 @@ function App() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0D57636C] text-slate-900 font-sans">
-            <main className="container max-w-xl mx-auto min-h-screen bg-white shadow-xl relative px-4 pt-6">
+        <div className="min-h-screen bg-[#0D57636C] dark:bg-[#0B494F] text-slate-900 dark:text-white font-sans">
+            <main className="container max-w-xl mx-auto min-h-screen bg-white dark:bg-[#1C1C1C] shadow-xl relative px-4 pt-6">
                 {activeTab === 'home' && <Home />}
                 {activeTab === 'accounts' && <Accounts />}
                 {activeTab === 'statistics' && <Statistics />}
