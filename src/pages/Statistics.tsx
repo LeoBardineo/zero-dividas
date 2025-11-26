@@ -1,17 +1,14 @@
-import { useState } from 'react'
+
 import { useStore } from '@/store/useStore'
 import { formatCurrency } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 import { startOfMonth, endOfMonth } from 'date-fns'
 
 export default function Statistics() {
     const { transactions, categories } = useStore()
-    const [debtAmount, setDebtAmount] = useState('')
-    const [monthlyPayment, setMonthlyPayment] = useState('')
-    const [monthsToPay, setMonthsToPay] = useState<number | null>(null)
+
 
     const today = new Date()
     const currentMonthStart = startOfMonth(today)
@@ -52,13 +49,6 @@ export default function Statistics() {
         },
     ]
 
-    // const calculatePayoff = () => {
-    //     const debt = parseFloat(debtAmount)
-    //     const payment = parseFloat(monthlyPayment)
-    //     if (debt > 0 && payment > 0) {
-    //         setMonthsToPay(Math.ceil(debt / payment))
-    //     }
-    // }
 
     return (
         <div className="space-y-6 pb-24">
@@ -130,7 +120,7 @@ export default function Statistics() {
                     <div className="h-[200px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={barData}>
-                                <XAxis dataKey="name" fontSize={12}/>
+                                <XAxis dataKey="name" fontSize={12} />
                                 <YAxis fontSize={12} tickFormatter={(value) => `R$${value / 1000}k`} />
                                 <Tooltip formatter={(value: number) => formatCurrency(value)} />
                                 <Legend />
