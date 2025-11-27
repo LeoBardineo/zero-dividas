@@ -36,6 +36,8 @@ interface AppState {
     updateTransaction: (id: string, updates: Partial<Transaction>) => void;
     deleteTransaction: (id: string) => void;
     addAccount: (account: Account) => void;
+    updateAccount: (id: string, updates: Partial<Account>) => void;
+    deleteAccount: (id: string) => void;
     addCategory: (category: Category) => void;
     updateCategory: (id: string, updates: Partial<Category>) => void;
     deleteCategory: (id: string) => void;
@@ -153,6 +155,18 @@ export const useStore = create<AppState>()(
 
             addAccount: (account) =>
                 set((state) => ({ accounts: [...state.accounts, account] })),
+
+            updateAccount: (id, updates) =>
+                set((state) => ({
+                    accounts: state.accounts.map((a) =>
+                        a.id === id ? { ...a, ...updates } : a
+                    ),
+                })),
+
+            deleteAccount: (id) =>
+                set((state) => ({
+                    accounts: state.accounts.filter((a) => a.id !== id),
+                })),
 
             addCategory: (category) =>
                 set((state) => ({ categories: [...state.categories, category] })),

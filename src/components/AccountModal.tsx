@@ -1,48 +1,69 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useStore } from '@/store/useStore'
 import { Modal } from '@/components/ui/modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Account } from '@/utils/mockData'
 
-interface AddAccountModalProps {
+interface AccountModalProps {
     isOpen: boolean
     onClose: () => void
+    accountToEdit?: Account | null
 }
 
-export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
-    const { addAccount } = useStore()
+export function AccountModal({ isOpen, onClose, accountToEdit }: AccountModalProps) {
+    const { addAccount, updateAccount } = useStore()
     const [bankName, setBankName] = useState('')
     const [balance, setBalance] = useState('')
     const [type, setType] = useState<Account['type']>('checking')
     const [color, setColor] = useState('#3b82f6') // Default blue
+
+    useEffect(() => {
+        if (accountToEdit) {
+            setBankName(accountToEdit.bankName)
+            setBalance(accountToEdit.balance.toString())
+            setType(accountToEdit.type)
+            setColor(accountToEdit.color)
+        } else {
+            setBankName('')
+            setBalance('')
+            setType('checking')
+            setColor('#3b82f6')
+        }
+    }, [accountToEdit, isOpen])
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
         if (!bankName || !balance) return
 
-        const newAccount: Account = {
-            id: crypto.randomUUID(),
-            bankName,
-            balance: parseFloat(balance),
-            color,
-            type
+        if (accountToEdit) {
+            updateAccount(accountToEdit.id, {
+                bankName,
+                balance: parseFloat(balance),
+                color,
+                type
+            })
+        } else {
+            const newAccount: Account = {
+                id: crypto.randomUUID(),
+                bankName,
+                balance: parseFloat(balance),
+                color,
+                type
+            }
+            addAccount(newAccount)
         }
-
-        addAccount(newAccount)
-
-        // Reset form
-        setBankName('')
-        setBalance('')
-        setType('checking')
-        setColor('#3b82f6')
 
         onClose()
     }
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title="Adicionar Nova Conta">
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title={accountToEdit ? "Editar Conta" : "Adicionar Nova Conta"}
+        >
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                     <label htmlFor="bankName" className="text-sm font-medium">Nome do Banco / Instituição</label>
@@ -102,7 +123,7 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
                         Cancelar
                     </Button>
                     <Button type="submit">
-                        Adicionar Conta
+                        {accountToEdit ? "Salvar Alterações" : "Adicionar Conta"}
                     </Button>
                 </div>
             </form>

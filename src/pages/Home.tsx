@@ -1,13 +1,15 @@
+import { useState } from 'react'
 import { useStore } from '@/store/useStore'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { AccountCard } from '@/components/AccountCard'
-import { AddAccountModal } from '@/components/AddAccountModal'
+import { AccountModal } from '@/components/AccountModal'
 import { CategoryList } from '@/components/CategoryList'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Plus, Minus, LogOut } from 'lucide-react'
 import { startOfMonth, endOfMonth, isAfter } from 'date-fns'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { Account } from '@/utils/mockData'
 
 export default function Home() {
     const {
@@ -20,8 +22,11 @@ export default function Home() {
         setAccountsSortOrder,
         isAddAccountModalOpen,
         openAddAccountModal,
-        closeAddAccountModal
+        closeAddAccountModal,
+        deleteAccount
     } = useStore()
+
+    const [editingAccount, setEditingAccount] = useState<Account | null>(null)
 
     if (!user) return null
 
@@ -164,13 +169,33 @@ export default function Home() {
             <div>
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="font-semibold text-slate-900 dark:text-slate-50">Minhas Contas</h3>
-                    <Button variant="ghost" size="sm" className="text-xs h-8 dark:hover:bg-slate-800 dark:hover:text-white" onClick={openAddAccountModal}>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-xs h-8 dark:hover:bg-slate-800 dark:hover:text-white"
+                        onClick={() => {
+                            setEditingAccount(null)
+                            openAddAccountModal()
+                        }}
+                    >
                         Adicionar
                     </Button>
                 </div>
                 <div className="flex space-x-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
                     {accounts.map(account => (
-                        <AccountCard key={account.id} account={account} />
+                        <AccountCard
+                            key={account.id}
+                            account={account}
+                            onEdit={(acc) => {
+                                setEditingAccount(acc)
+                                openAddAccountModal()
+                            }}
+                            onDelete={(id) => {
+                                if (confirm('Tem certeza que deseja excluir esta conta?')) {
+                                    deleteAccount(id)
+                                }
+                            }}
+                        />
                     ))}
                 </div>
             </div>
@@ -218,9 +243,13 @@ export default function Home() {
             {/* Categories */}
             <CategoryList />
 
-            <AddAccountModal
+            <AccountModal
                 isOpen={isAddAccountModalOpen}
-                onClose={closeAddAccountModal}
+                onClose={() => {
+                    closeAddAccountModal()
+                    setEditingAccount(null)
+                }}
+                accountToEdit={editingAccount}
             />
         </div>
     )
