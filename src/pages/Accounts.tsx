@@ -116,9 +116,9 @@ export default function Accounts() {
                                     variant="ghost"
                                     size="sm"
                                     className="h-6 text-[10px] px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-                                    onClick={(e) => {
-                                        e.stopPropagation()
+                                    onClick={() => {
                                         payBill(transaction.id)
+                                        alert("Conta paga!")
                                     }}
                                 >
                                     Pagar

@@ -10,6 +10,7 @@ import { Plus, Minus, LogOut } from 'lucide-react'
 import { startOfMonth, endOfMonth, isAfter } from 'date-fns'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Account } from '@/utils/mockData'
+import { TransactionModal } from '@/components/TransactionModal'
 
 export default function Home() {
     const {
@@ -19,6 +20,9 @@ export default function Home() {
         logout,
         setActiveTab,
         openTransactionModal,
+        isTransactionModalOpen,
+        transactionModalType,
+        closeTransactionModal,
         setAccountsSortOrder,
         isAddAccountModalOpen,
         openAddAccountModal,
@@ -112,7 +116,7 @@ export default function Home() {
                         size="icon"
                         className="h-14 w-14 rounded-full bg-emerald-500 dark:bg-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-900 shadow-md"
                         onClick={() => {
-                            setActiveTab('accounts') /* reclamaram que não gostaram de serem guiados para aba de contas*/
+                            //setActiveTab('accounts') /* reclamaram que não gostaram de serem guiados para aba de contas*/
                             openTransactionModal('income')
                         }}
                     >
@@ -125,7 +129,7 @@ export default function Home() {
                         size="icon"
                         className="h-14 w-14 rounded-full bg-red-500 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-800 shadow-md"
                         onClick={() => {
-                            setActiveTab('accounts') /* reclamaram que não gostaram de serem guiados para aba de contas*/
+                            //setActiveTab('accounts') /* reclamaram que não gostaram de serem guiados para aba de contas*/
                             openTransactionModal('expense')
                         }}
                     >
@@ -250,6 +254,11 @@ export default function Home() {
                     setEditingAccount(null)
                 }}
                 accountToEdit={editingAccount}
+            />
+            <TransactionModal
+                isOpen={isTransactionModalOpen}
+                onClose={closeTransactionModal}
+                defaultType={transactionModalType}
             />
         </div>
     )
