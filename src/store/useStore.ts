@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User, Account, Transaction, Category, generateMockData } from '../utils/mockData';
+import { User, Account, Transaction, Category, generateMockData, CATEGORIES } from '../utils/mockData';
 
 interface AppState {
     user: User | null;
@@ -37,6 +37,8 @@ interface AppState {
     deleteTransaction: (id: string) => void;
     addAccount: (account: Account) => void;
     addCategory: (category: Category) => void;
+    updateCategory: (id: string, updates: Partial<Category>) => void;
+    deleteCategory: (id: string) => void;
     payBill: (transactionId: string) => void;
 }
 
@@ -104,7 +106,7 @@ export const useStore = create<AppState>()(
                         },
                         accounts: [], // Empty for new users
                         transactions: [],
-                        categories: [], // Should probably have default categories
+                        categories: CATEGORIES,
                         isAuthenticated: true,
                     });
                     return true;
@@ -154,6 +156,18 @@ export const useStore = create<AppState>()(
 
             addCategory: (category) =>
                 set((state) => ({ categories: [...state.categories, category] })),
+
+            updateCategory: (id, updates) =>
+                set((state) => ({
+                    categories: state.categories.map((c) =>
+                        c.id === id ? { ...c, ...updates } : c
+                    ),
+                })),
+
+            deleteCategory: (id) =>
+                set((state) => ({
+                    categories: state.categories.filter((c) => c.id !== id),
+                })),
 
             payBill: (transactionId) =>
                 set((state) => ({

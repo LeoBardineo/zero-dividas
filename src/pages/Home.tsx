@@ -2,6 +2,7 @@ import { useStore } from '@/store/useStore'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { AccountCard } from '@/components/AccountCard'
 import { AddAccountModal } from '@/components/AddAccountModal'
+import { CategoryList } from '@/components/CategoryList'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Plus, Minus, LogOut } from 'lucide-react'
@@ -213,6 +214,9 @@ export default function Home() {
                     )}
                 </div>
             </div>
+
+            {/* Categories */}
+            <CategoryList />
 
             <AddAccountModal
                 isOpen={isAddAccountModalOpen}

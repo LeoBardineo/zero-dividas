@@ -54,6 +54,7 @@ export const CATEGORIES: Category[] = [
     { id: '5', name: 'Saúde', color: '#33FFF5', type: 'expense' },
     { id: '6', name: 'Salário', color: '#57FF33', type: 'income' },
     { id: '7', name: 'Freelance', color: '#FFD700', type: 'income' },
+    { id: '8', name: 'Outros', color: '#64748b', type: 'expense' },
 ];
 
 export const generateMockData = () => {
