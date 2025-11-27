@@ -5,7 +5,6 @@ import Home from '@/pages/Home'
 import Accounts from '@/pages/Accounts'
 import Statistics from '@/pages/Statistics'
 import { BottomNav } from '@/components/BottomNav'
-import { ThemeToggle } from './components/ThemeToggle'
 
 function App(): JSX.Element {
     const { isAuthenticated, activeTab, setActiveTab } = useStore()
