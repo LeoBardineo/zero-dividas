@@ -4,55 +4,85 @@ import { Modal } from '@/components/ui/modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { faker } from '@faker-js/faker'
+import { Transaction } from '@/utils/mockData'
 
-interface AddTransactionModalProps {
+interface TransactionModalProps {
     isOpen: boolean
     onClose: () => void
     defaultType?: 'income' | 'expense'
+    transactionToEdit?: Transaction | null
 }
 
-export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }: AddTransactionModalProps) {
-    const { addTransaction, categories, accounts } = useStore()
+export function TransactionModal({ isOpen, onClose, defaultType = 'expense', transactionToEdit }: TransactionModalProps) {
+    const { addTransaction, updateTransaction, categories, accounts } = useStore()
     const [description, setDescription] = useState('')
     const [amount, setAmount] = useState('')
     const [date, setDate] = useState(new Date().toISOString().split('T')[0])
-    const [categoryId, setCategoryId] = useState(categories[0]?.id || '')
-    const [accountId, setAccountId] = useState(accounts[0]?.id || '')
+    const [categoryId, setCategoryId] = useState('')
+    const [accountId, setAccountId] = useState('')
     const [type, setType] = useState<'income' | 'expense'>(defaultType)
     const [isRecurring, setIsRecurring] = useState(false)
 
     useEffect(() => {
         if (isOpen) {
-            setType(defaultType)
+            if (transactionToEdit) {
+                setDescription(transactionToEdit.description)
+                setAmount(transactionToEdit.amount.toString())
+                setDate(new Date(transactionToEdit.date).toISOString().split('T')[0])
+                setCategoryId(transactionToEdit.categoryId)
+                setAccountId(transactionToEdit.accountId)
+                setType(transactionToEdit.type)
+                setIsRecurring(transactionToEdit.isRecurring || false)
+            } else {
+                setDescription('')
+                setAmount('')
+                setDate(new Date().toISOString().split('T')[0])
+                setCategoryId(categories[0]?.id || '')
+                setAccountId(accounts[0]?.id || '')
+                setType(defaultType)
+                setIsRecurring(false)
+            }
         }
-    }, [isOpen, defaultType])
+    }, [isOpen, transactionToEdit, defaultType, categories, accounts])
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        addTransaction({
-            id: faker.string.uuid(),
-            description,
-            amount: parseFloat(amount),
-            date: new Date(date).toISOString(),
-            categoryId,
-            accountId,
-            type,
-            status: 'pending',
-            isRecurring: isRecurring,
-            recurrence: isRecurring ? 'monthly' : undefined,
-        })
+        if (transactionToEdit) {
+            updateTransaction(transactionToEdit.id, {
+                description,
+                amount: parseFloat(amount),
+                date: new Date(date).toISOString(),
+                categoryId,
+                accountId,
+                type,
+                isRecurring,
+                recurrence: isRecurring ? 'monthly' : undefined,
+            })
+        } else {
+            addTransaction({
+                id: faker.string.uuid(),
+                description,
+                amount: parseFloat(amount),
+                date: new Date(date).toISOString(),
+                categoryId,
+                accountId,
+                type,
+                status: 'pending',
+                isRecurring: isRecurring,
+                recurrence: isRecurring ? 'monthly' : undefined,
+            })
+        }
 
         onClose()
-        // Reset form
-        setDescription('')
-        setAmount('')
-        setDate(new Date().toISOString().split('T')[0])
-        setIsRecurring(false)
     }
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title="Nova Transação">
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title={transactionToEdit ? "Editar Transação" : "Nova Transação"}
+        >
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="flex space-x-2">
                     <Button
@@ -164,7 +194,7 @@ export function AddTransactionModal({ isOpen, onClose, defaultType = 'expense' }
                 </div>
 
                 <Button type="submit" className="w-full">
-                    Salvar
+                    {transactionToEdit ? "Salvar Alterações" : "Salvar"}
                 </Button>
             </form>
         </Modal>

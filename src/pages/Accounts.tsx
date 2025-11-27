@@ -4,12 +4,13 @@ import { formatCurrency, formatDate } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Plus, Search, Calendar as CalendarIcon, List, ChevronDown, ChevronRight, Filter } from 'lucide-react'
-import { AddTransactionModal } from '@/components/AddTransactionModal'
+import { Plus, Search, Calendar as CalendarIcon, List, ChevronDown, ChevronRight, Filter, Pencil } from 'lucide-react'
+import { TransactionModal } from '@/components/TransactionModal'
 import { FilterModal } from '@/components/FilterModal'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { isSameDay, parseISO } from 'date-fns'
+import { Transaction } from '@/utils/mockData'
 
 export default function Accounts() {
     const {
@@ -32,6 +33,7 @@ export default function Accounts() {
     const [selectedAccount, setSelectedAccount] = useState('all')
 
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+    const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null)
 
     const [visibleExpensesCount, setVisibleExpensesCount] = useState(5)
     const [visibleIncomeCount, setVisibleIncomeCount] = useState(5)
@@ -89,7 +91,7 @@ export default function Accounts() {
     }
 
     const TransactionItem = ({ transaction }: { transaction: typeof transactions[0] }) => (
-        <Card key={transaction.id} className="overflow-hidden mb-3">
+        <Card key={transaction.id} className="overflow-hidden mb-3 group relative">
             <div className="flex items-center p-4">
                 <div
                     className="h-10 w-1 rounded-full mr-4"
@@ -114,7 +116,10 @@ export default function Accounts() {
                                     variant="ghost"
                                     size="sm"
                                     className="h-6 text-[10px] px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-                                    onClick={() => payBill(transaction.id)}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        payBill(transaction.id)
+                                    }}
                                 >
                                     Pagar
                                 </Button>
@@ -122,6 +127,18 @@ export default function Accounts() {
                         </div>
                     )}
                 </div>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6 bg-white/80 dark:bg-slate-800/80"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setEditingTransaction(transaction)
+                        openTransactionModal(transaction.type)
+                    }}
+                >
+                    <Pencil className="h-3 w-3 text-slate-500" />
+                </Button>
             </div>
         </Card>
     )
@@ -306,15 +323,22 @@ export default function Accounts() {
 
             <Button
                 className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg bg-[#39D2C0] hover:bg-[#0D57636C]"
-                onClick={() => openTransactionModal()}
+                onClick={() => {
+                    setEditingTransaction(null)
+                    openTransactionModal()
+                }}
             >
                 <Plus className="h-6 w-6" />
             </Button>
 
-            <AddTransactionModal
+            <TransactionModal
                 isOpen={isTransactionModalOpen}
-                onClose={closeTransactionModal}
+                onClose={() => {
+                    closeTransactionModal()
+                    setEditingTransaction(null)
+                }}
                 defaultType={transactionModalType}
+                transactionToEdit={editingTransaction}
             />
 
             <FilterModal
