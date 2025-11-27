@@ -39,6 +39,17 @@ export default function Statistics() {
         })
         .filter(item => item.value > 0)
 
+    // Chart Data: Income by Category
+    const incomeByCategory = categories
+        .filter(c => c.type === 'income')
+        .map(category => {
+            const amount = currentMonthTransactions
+                .filter(t => t.categoryId === category.id && t.type === 'income')
+                .reduce((acc, t) => acc + t.amount, 0)
+            return { name: category.name, value: amount, color: category.color }
+        })
+        .filter(item => item.value > 0)
+
     // Chart Data: Income vs Expense (Mock for previous month comparison)
     const barData = [
         { name: 'Mês Passado', Receitas: 4000, Despesas: 3200 },
@@ -74,40 +85,89 @@ export default function Statistics() {
                 </Card>
             </div>
 
-            {/* Donut Chart */}
+            {/* Expense Pie Chart */}
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-base dark:text-slate-100">Gastos por Categoria</CardTitle>
+                    <CardTitle className="text-base dark:text-slate-100">Despesas por Categoria</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="h-[200px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
-                                <Pie
-                                    data={expensesByCategory}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    paddingAngle={5}
-                                    dataKey="value"
-                                >
-                                    {expensesByCategory.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
-                                    ))}
-                                </Pie>
-                                <Tooltip formatter={(value: number) => formatCurrency(value)} />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </div>
-                    <div className="mt-4 grid grid-cols-2 gap-2">
-                        {expensesByCategory.map((item, index) => (
-                            <div key={index} className="flex items-center text-xs">
-                                <div className="h-2 w-2 rounded-full mr-2" style={{ backgroundColor: item.color }} />
-                                <span className="truncate dark:text-slate-50">{item.name}</span>
+                    {expensesByCategory.length > 0 ? (
+                        <>
+                            <div className="h-[200px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <PieChart>
+                                        <Pie
+                                            data={expensesByCategory}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={60}
+                                            outerRadius={80}
+                                            paddingAngle={5}
+                                            dataKey="value"
+                                        >
+                                            {expensesByCategory.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.color} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                    </PieChart>
+                                </ResponsiveContainer>
                             </div>
-                        ))}
-                    </div>
+                            <div className="mt-4 grid grid-cols-2 gap-2">
+                                {expensesByCategory.map((item, index) => (
+                                    <div key={index} className="flex items-center text-xs">
+                                        <div className="h-2 w-2 rounded-full mr-2" style={{ backgroundColor: item.color }} />
+                                        <span className="truncate dark:text-slate-50">{item.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    ) : (
+                        <p className="text-sm text-slate-500 text-center py-8">Nenhuma despesa neste mês.</p>
+                    )}
+                </CardContent>
+            </Card>
+
+            {/* Income Pie Chart */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-base dark:text-slate-100">Receitas por Categoria</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    {incomeByCategory.length > 0 ? (
+                        <>
+                            <div className="h-[200px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <PieChart>
+                                        <Pie
+                                            data={incomeByCategory}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={60}
+                                            outerRadius={80}
+                                            paddingAngle={5}
+                                            dataKey="value"
+                                        >
+                                            {incomeByCategory.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.color} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            </div>
+                            <div className="mt-4 grid grid-cols-2 gap-2">
+                                {incomeByCategory.map((item, index) => (
+                                    <div key={index} className="flex items-center text-xs">
+                                        <div className="h-2 w-2 rounded-full mr-2" style={{ backgroundColor: item.color }} />
+                                        <span className="truncate dark:text-slate-50">{item.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    ) : (
+                        <p className="text-sm text-slate-500 text-center py-8">Nenhuma receita neste mês.</p>
+                    )}
                 </CardContent>
             </Card>
 

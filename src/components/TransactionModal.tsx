@@ -89,7 +89,11 @@ export function TransactionModal({ isOpen, onClose, defaultType = 'expense', tra
                         type="button"
                         variant={type === 'expense' ? 'destructive' : 'outline'}
                         className="flex-1"
-                        onClick={() => setType('expense')}
+                        onClick={() => {
+                            setType('expense')
+                            const firstCategory = categories.find(c => c.type === 'expense')
+                            setCategoryId(firstCategory?.id || '')
+                        }}
                     >
                         Despesa
                     </Button>
@@ -97,7 +101,11 @@ export function TransactionModal({ isOpen, onClose, defaultType = 'expense', tra
                         type="button"
                         variant={type === 'income' ? 'default' : 'outline'}
                         className={type === 'income' ? 'bg-emerald-500 hover:bg-emerald-600 flex-1' : 'flex-1'}
-                        onClick={() => setType('income')}
+                        onClick={() => {
+                            setType('income')
+                            const firstCategory = categories.find(c => c.type === 'income')
+                            setCategoryId(firstCategory?.id || '')
+                        }}
                     >
                         Receita
                     </Button>

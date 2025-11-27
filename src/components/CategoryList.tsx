@@ -49,48 +49,108 @@ export function CategoryList() {
                 </Button>
             </div>
 
-            <div className="space-y-3">
-                {categories.map((category) => {
-                    const total = getCategoryTotal(category.id)
-                    return (
-                        <Card key={category.id} className="overflow-hidden">
-                            <CardContent className="p-3 flex items-center justify-between">
-                                <div className="flex items-center space-x-3 overflow-hidden">
-                                    <div
-                                        className="w-3 h-3 rounded-full flex-shrink-0"
-                                        style={{ backgroundColor: category.color }}
-                                    />
-                                    <div>
-                                        <p className="text-sm font-medium truncate dark:text-slate-100">
-                                            {category.name}
-                                        </p>
-                                        <p className="text-xs text-slate-500 dark:text-slate-400">
-                                            {formatCurrency(total)}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex space-x-1">
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-8 w-8 text-slate-400 hover:text-slate-600"
-                                        onClick={() => handleEdit(category)}
-                                    >
-                                        <Pencil className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-8 w-8 text-slate-400 hover:text-red-500"
-                                        onClick={() => handleDelete(category.id)}
-                                    >
-                                        <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    )
-                })}
+            <div className="space-y-6">
+                {/* Expense Categories */}
+                <div>
+                    <h4 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wider">Despesas</h4>
+                    <div className="space-y-3">
+                        {categories.filter(c => c.type === 'expense').map((category) => {
+                            const total = getCategoryTotal(category.id)
+                            return (
+                                <Card key={category.id} className="overflow-hidden">
+                                    <CardContent className="p-3 flex items-center justify-between">
+                                        <div className="flex items-center space-x-3 overflow-hidden">
+                                            <div
+                                                className="w-3 h-3 rounded-full flex-shrink-0"
+                                                style={{ backgroundColor: category.color }}
+                                            />
+                                            <div>
+                                                <p className="text-sm font-medium truncate dark:text-slate-100">
+                                                    {category.name}
+                                                </p>
+                                                <p className="text-xs text-slate-500 dark:text-slate-400">
+                                                    {formatCurrency(total)}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex space-x-1">
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 text-slate-400 hover:text-slate-600"
+                                                onClick={() => handleEdit(category)}
+                                            >
+                                                <Pencil className="h-4 w-4" />
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 text-slate-400 hover:text-red-500"
+                                                onClick={() => handleDelete(category.id)}
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            )
+                        })}
+                        {categories.filter(c => c.type === 'expense').length === 0 && (
+                            <p className="text-sm text-slate-400 italic">Nenhuma categoria de despesa.</p>
+                        )}
+                    </div>
+                </div>
+
+                {/* Income Categories */}
+                <div>
+                    <h4 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wider">Receitas</h4>
+                    <div className="space-y-3">
+                        {categories.filter(c => c.type === 'income').map((category) => {
+                            const total = getCategoryTotal(category.id)
+                            return (
+                                <Card key={category.id} className="overflow-hidden">
+                                    <CardContent className="p-3 flex items-center justify-between">
+                                        <div className="flex items-center space-x-3 overflow-hidden">
+                                            <div
+                                                className="w-3 h-3 rounded-full flex-shrink-0"
+                                                style={{ backgroundColor: category.color }}
+                                            />
+                                            <div>
+                                                <p className="text-sm font-medium truncate dark:text-slate-100">
+                                                    {category.name}
+                                                </p>
+                                                <p className="text-xs text-slate-500 dark:text-slate-400">
+                                                    {formatCurrency(total)}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex space-x-1">
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 text-slate-400 hover:text-slate-600"
+                                                onClick={() => handleEdit(category)}
+                                            >
+                                                <Pencil className="h-4 w-4" />
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 text-slate-400 hover:text-red-500"
+                                                onClick={() => handleDelete(category.id)}
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            )
+                        })}
+                        {categories.filter(c => c.type === 'income').length === 0 && (
+                            <p className="text-sm text-slate-400 italic">Nenhuma categoria de receita.</p>
+                        )}
+                    </div>
+                </div>
             </div>
 
             <CategoryModal
